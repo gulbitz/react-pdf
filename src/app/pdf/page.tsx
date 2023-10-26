@@ -84,6 +84,13 @@ function BasicDocument() {
     );
 
     useEffect(() => {
+        if (typeof window !== 'undefined') {
+            // Access the window object safely here
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            console.log(`Window width: ${width}, height: ${height}`);
+        }
+        
         const storedData = localStorage.getItem('formData');
 
         if (storedData) {

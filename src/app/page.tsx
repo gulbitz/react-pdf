@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { Grid, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import BasicDocument from './pdf/page';
+import { FormEvent } from 'react';
 
 function Copyright() {
   return (
@@ -30,20 +31,15 @@ export default function Page() {
 
   const router = useRouter();
 
-  const handleSubmit = (event: { preventDefault: () => void; target: { companyName: { value: any; }; address: { value: any; }; phone: { value: any; }; email: { value: any; }; }; }) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const companyNameValue = event.target.companyName.value;
-    const addressValue = event.target.address.value;
-    const phoneValue = event.target.phone.value;
-    const emailValue = event.target.email.value;
-
     const formData = {
-      companyName: companyNameValue,
-      address: addressValue,
-      phone: phoneValue,
-      email: emailValue,
-    }
+      companyName: event.currentTarget.companyName.value,
+      address: event.currentTarget.address.value,
+      phone: event.currentTarget.phone.value,
+      email: event.currentTarget.email.value,
+    };
 
     localStorage.setItem('formData', JSON.stringify(formData));
 

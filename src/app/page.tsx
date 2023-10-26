@@ -41,7 +41,7 @@ export default function Page() {
 
   const router = useRouter();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: Event) => {
     event.preventDefault();
 
     const companyNameValue = event.target.companyName.value;

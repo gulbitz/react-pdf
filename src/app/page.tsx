@@ -26,22 +26,11 @@ function Copyright() {
   );
 }
 
-interface Event {
-  preventDefault: () => void;
-  target:
-  {
-    companyName: { value: any; };
-    address: { value: any; };
-    phone: { value: any; };
-    email: { value: any; };
-  };
-}
-
 export default function Page() {
 
   const router = useRouter();
 
-  const handleSubmit = (event: Event) => {
+  const handleSubmit = (event: { preventDefault: () => void; target: { companyName: { value: any; }; address: { value: any; }; phone: { value: any; }; email: { value: any; }; }; }) => {
     event.preventDefault();
 
     const companyNameValue = event.target.companyName.value;

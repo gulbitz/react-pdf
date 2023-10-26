@@ -139,6 +139,7 @@ function BasicDocument() {
                                 <Text style={[styles.heading3, { textAlign: 'center', paddingTop: 0, paddingHorizontal: 40 }]} >Dated: 22 Oct, 2023</Text>
                             </View>
                             <Text style={[styles.heading1, { textAlign: 'center', }]} >Invoice</Text>
+                            {/* eslint-disable-next-line jsx-a11y/alt-text */}
                             <Image src="/img/bitzstudio-logo.png" style={styles.logo} />
                         </View>
                     </View>

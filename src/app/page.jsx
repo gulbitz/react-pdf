@@ -31,7 +31,7 @@ export default function Page() {
 
   const router = useRouter();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     const formData = {

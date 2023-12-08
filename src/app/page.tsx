@@ -12,7 +12,8 @@ import Typography from '@mui/material/Typography';
 import { Grid, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import BasicDocument from './pdf/page';
-import { FormEvent } from 'react';
+import { FormEvent, useRef } from 'react';
+import SignatureCanvas from 'react-signature-canvas'
 
 function Copyright() {
   return (
@@ -31,7 +32,7 @@ export default function Page() {
 
   const router = useRouter();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = {
@@ -39,6 +40,7 @@ export default function Page() {
       address: event.currentTarget.address.value,
       phone: event.currentTarget.phone.value,
       email: event.currentTarget.email.value,
+      signature: sigCanvas.current.getTrimmedCanvas().toDataURL('image/png'),
     };
 
     localStorage.setItem('formData', JSON.stringify(formData));
@@ -46,6 +48,9 @@ export default function Page() {
     router.push('/pdf', { scroll: false });
 
   };
+
+  // Signature Canvas
+  const sigCanvas = useRef({} as any);
 
   return (
     <React.Fragment>
@@ -70,7 +75,6 @@ export default function Page() {
           <Typography component="h1" variant="h4" align="center">
             Fill Invoice PDF
           </Typography>
-
 
           <form onSubmit={handleSubmit}>
             <React.Fragment>
@@ -125,8 +129,40 @@ export default function Page() {
               </Grid>
             </React.Fragment>
 
+            <React.Fragment>
+              <Typography variant="h6" sx={{ mt: 3 }} gutterBottom>
+                Signature
+              </Typography>
+              <Grid container spacing={3}>
+                <Grid item xs={12} >
+                  <SignatureCanvas
+                    ref={sigCanvas}
+                    penColor='black'
+                    canvasProps={{
+                      width: 500,
+                      height: 200,
+                      className: 'sigCanvas',
+                      style: { border: '1px dashed #000000' }
+                    }} />
+                </Grid>
+                {/* Clear, Edit, Trim, Done, Buttons */}
+                <Grid item>
+                  <Button type="button" variant="contained" onClick={() => {
+                    sigCanvas.current.clear()
+                  }}>
+                    Clear Signature
+                  </Button>
+                </Grid>
+              </Grid>
+            </React.Fragment>
+
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button type="submit" variant="contained" sx={{ mt: 3, ml: 1 }}>
+              <Button type="submit" variant="contained" sx={{ mt: 3, ml: 1 }}
+                onClick={() => {
+                  const trimmedDataURL = sigCanvas.current.getTrimmedCanvas().toDataURL('image/png');
+                  console.log(trimmedDataURL);
+                }}
+              >
                 Download Invoice
               </Button>
             </Box>

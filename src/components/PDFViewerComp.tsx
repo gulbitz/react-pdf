@@ -8,18 +8,17 @@ import {
     PDFViewer,
     Image,
 } from "@react-pdf/renderer";
-import { useEffect, useState } from "react";
-// Create styles
+
 const styles = StyleSheet.create({
     page: {
         backgroundColor: "#fff",
         color: "#1C2120",
     },
 
-    viewer: {
-        width: window.innerWidth,
-        height: window.innerHeight,
-    },
+    // viewer: {
+    //     width: window.innerWidth,
+    //     height: window.innerHeight,
+    // },
 
     container: {
         flex: 1,
@@ -71,45 +70,24 @@ const styles = StyleSheet.create({
     }
 });
 
-// Create Document Component
-function BasicDocument() {
+interface PDFViewerProps {
+    viewerDimensions: {
+        width: number,
+        height: number,
+    },
+    formData: {
+        companyName: string,
+        address: string,
+        phone: number | string,
+        email: string,
+        signature: string,
+    }
+}
 
-    const [formData, setFormData] = useState(
-        {
-            companyName: "Abc Company",
-            address: "Lahore PK",
-            phone: "9832643222",
-            email: "hello@mywebsite.com",
-        }
-    );
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            // Access the window object safely here
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-            console.log(`Window width: ${width}, height: ${height}`);
-        }
-        
-        const storedData = localStorage.getItem('formData');
-
-        if (storedData) {
-            const parsedData = JSON.parse(storedData);
-            setFormData(parsedData);
-        }
-    }, []);
-
-    const [viewerDimensions, setViewerDimensions] = useState({ width: 0, height: 0 });
-
-    useEffect(() => {
-        setViewerDimensions({
-            width: window.innerWidth,
-            height: window.innerHeight,
-        });
-    }, []);
+const PDFViewerComp = (data: PDFViewerProps) => {
 
     return (
-        <PDFViewer style={styles.viewer}>
+        <PDFViewer style={{ width: data.viewerDimensions.width, height: data.viewerDimensions.height }}>
 
             <Document>
 
@@ -155,22 +133,28 @@ function BasicDocument() {
                         <Text style={[styles.heading2, { paddingTop: 0, }]}>Bill To:</Text>
 
                         <Text style={styles.heading3}>Company Name</Text>
-                        <Text style={styles.text}>{formData.companyName}</Text>
+                        <Text style={styles.text}>{data.formData.companyName}</Text>
 
                         <Text style={styles.heading3}>Address</Text>
-                        <Text style={styles.text}>{formData.address}</Text>
+                        <Text style={styles.text}>{data.formData.address}</Text>
 
                         <Text style={styles.heading3}>Phone Number</Text>
-                        <Text style={styles.text}>{formData.phone}</Text>
+                        <Text style={styles.text}>{data.formData.phone}</Text>
 
                         <Text style={styles.heading3}>Email</Text>
-                        <Text style={styles.text}>{formData.email}</Text>
+                        <Text style={styles.text}>{data.formData.email}</Text>
+                    </View>
+
+                    <View style={styles.container}>
+                        <Text style={[styles.heading2, { paddingTop: 0, }]}>Signature</Text>
+
+                        <Image src={data.formData.signature} style={{ width: 200, height: 100 }} alt="Signature" />
                     </View>
 
                 </Page>
             </Document>
         </PDFViewer >
-    );
+    )
 }
 
-export default BasicDocument;
+export default PDFViewerComp

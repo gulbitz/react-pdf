@@ -148,7 +148,7 @@ const PDFViewerComp = (data: PDFViewerProps) => {
                     <View style={styles.container}>
                         <Text style={[styles.heading2, { paddingTop: 0, }]}>Signature</Text>
 
-                        <Image src={data.formData.signature} style={{ width: 200, height: 100 }} alt="Signature" />
+                        <Image src={data.formData.signature} style={{ width: 200, height: 100 }} />
                     </View>
 
                 </Page>

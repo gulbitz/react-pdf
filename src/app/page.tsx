@@ -13,7 +13,7 @@ import { Grid, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import BasicDocument from './pdf/page';
 import { FormEvent, useRef } from 'react';
-import SignatureCanvas from 'react-signature-canvas'
+import SignatureCanvas from 'react-signature-canvas';
 
 function Copyright() {
   return (

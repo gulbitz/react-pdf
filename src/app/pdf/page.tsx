@@ -1,5 +1,9 @@
 'use client'
-import PDFViewerComp from "@/components/PDFViewerComp";
+// import PDFViewerComp from "@/components/PDFViewerComp";
+import dynamic from "next/dynamic";
+const PDFViewerComp = dynamic(() => import("@/components/PDFViewerComp"), {
+    ssr: false,
+});
 import { useEffect, useState } from "react";
 
 // Create Document Component
@@ -22,7 +26,7 @@ function BasicDocument() {
                 height: window.innerHeight,
             });
         }
-        
+
         const storedData = localStorage.getItem('formData');
 
         if (storedData) {
@@ -44,15 +48,15 @@ function BasicDocument() {
         <PDFViewerComp viewerDimensions={{
             width: viewerDimensions.width,
             height: viewerDimensions.height,
-        }} 
-        
-        formData={{
-            companyName: formData.companyName,
-            address: formData.address,
-            phone: formData.phone,
-            email: formData.email,
-            signature: formData.signature,
-        }} />
+        }}
+
+            formData={{
+                companyName: formData.companyName,
+                address: formData.address,
+                phone: formData.phone,
+                email: formData.email,
+                signature: formData.signature,
+            }} />
     );
 }
 

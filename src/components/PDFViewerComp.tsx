@@ -148,6 +148,7 @@ const PDFViewerComp = (data: PDFViewerProps) => {
                     <View style={styles.container}>
                         <Text style={[styles.heading2, { paddingTop: 0, }]}>Signature</Text>
 
+                        {/* eslint-disable-next-line jsx-a11y/alt-text */}
                         <Image src={data.formData.signature} style={{ width: 200, height: 100 }} />
                     </View>
 
